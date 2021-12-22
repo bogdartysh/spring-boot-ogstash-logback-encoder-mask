@@ -18,28 +18,25 @@ public class SpringLogginProcessingExampleApplication {
 
 
     @PostConstruct
-    public void consumeFromCoreTopicPartitionZERO() {
-        var containers = List.of(
+    public void logMessages() {
+        var messages = List.of(
                 LogEvent.builder()
-                        .email("pershyi@example.com")
                         .inn("3710937752")
                         .pubdatastr("public 1")
                         .build(),
                 LogEvent.builder()
-                        .email("druhyi.mama+1a@test.example.com")
-                        .inn("25914204750123123123")
+                        .inn("2591420475")
                         .pubdatastr("public 2")
                         .build()
         );
-        for (var c : containers) {
-            log.info("got [{}]", c);
+        for (var c : messages) {
+            log.warn("got [{}]", c);
         }
     }
 
     @Builder
     @Data
     public static class LogEvent {
-        String email;
         String pubdatastr;
         String inn;
     }
