@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <fieldNames/>
+        </encoder>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <fieldNames>
+                <message/>
+            </fieldNames>
+            <jsonGeneratorDecorator class="net.logstash.logback.mask.MaskingJsonGeneratorDecorator">
+                <valueMask>
+                    <value>
+                        ([\p{Space}\p{Punct}])([a-zA-Z0-9._%+-])[a-zA-Z0-9._%+-]*@([a-zA-Z0-9])[a-zA-Z0-9.-]*\.([a-zA-Z])[a-zA-Z]{1,5}([\p{Space}\p{Punct}])
+                    </value>
+                    <mask>$1$2****@$3****.$4****$5</mask>
+                </valueMask>
+                <valueMask>
+                    <value>([\p{Space}\p{Punct}])(\d)\d{8}(\d)([\p{Space}\p{Punct}])</value>
+                    <mask>$1$2***$3$4</mask>
+                </valueMask>
+            </jsonGeneratorDecorator>
+        </encoder>
+    </appender>
+    <root level="info">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+</configuration>
