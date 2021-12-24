@@ -55,7 +55,7 @@
                     <!-- phone number +380\d{9} 80\d{9} 0\d{9} in a middle of text -->
                     <valueMask>
                         <value>
-                            ([\p{Space}\p{Punct}])(\+?3?8?0)(\d{2})(\d{5})(\d{2})([\p{Space}\p{Punct}])
+                            ([\p{Space}\p{Punct}])(\+380|80|0)(\d{2})(\d{5})(\d{2})([\p{Space}\p{Punct}])
                         </value>
                         <mask>$1$2$3*******$5$6</mask>
                     </valueMask>
