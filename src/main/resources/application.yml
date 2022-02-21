@@ -1,0 +1,4 @@
+spring:
+  application:
+    name: logging-test
+logging.level.org.springframework.web: DEBUG
