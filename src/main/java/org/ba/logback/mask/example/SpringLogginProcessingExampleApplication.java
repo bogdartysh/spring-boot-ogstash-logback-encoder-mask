@@ -22,7 +22,10 @@ import java.util.Optional;
 @Slf4j
 public class SpringLogginProcessingExampleApplication {
     public static void main(String[] args) {
-        SpringApplication.run(SpringLogginProcessingExampleApplication.class, args);
+        var springApp = new SpringApplication(SpringLogginProcessingExampleApplication.class);
+       springApp.setAdditionalProfiles("json-nomask");
+      //  springApp.setAdditionalProfiles("json-sync");
+        springApp.run(args);
     }
 
     List<PersonLoggable> messages = List.of(
@@ -40,17 +43,11 @@ public class SpringLogginProcessingExampleApplication {
 
     @GetMapping("/msg/{inn}")
     public Optional<PersonLoggable> getMessage(@PathVariable String inn) {
-        return messages.stream().filter(c -> c.inn.equals(inn)).findFirst();
+        var resp =  messages.stream().filter(c -> c.inn.equals(inn)).findFirst();
+        log.info("RESP IS " + resp);
+        return resp;
     }
 
-    @PostConstruct
-    public void logMessages() {
-
-        for (var c : messages) {
-            log.warn("got [{}]", c);
-        }
-        log.info("all logged");
-    }
 
     @Builder
     @Data
@@ -59,12 +56,14 @@ public class SpringLogginProcessingExampleApplication {
         @Nullable
         String postCode;
 
-        @ToString.Include(name = "postCode")
-        String postCode() {
+        //@ToString.Include(name = "postCode")
+        //String postCode() {
             return Objects.isNull(postCode) ? postCode : DigestUtils.sha256Hex(postCode);
         }
 
         String inn;
+        //@ToString.Include(name = "inn")
+       // String innCode() { return Objects.isNull(postCode) ? inn : DigestUtils.sha256Hex(inn); }
     }
 
 }
